@@ -4,4 +4,4 @@
 Developers:
 - Clay Kaufmann
 - Johnny Richardson
-- Collin 
+- Collin Giles
