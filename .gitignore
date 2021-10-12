@@ -3,7 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# our information
 data/images
+data/resized
+data/images.csv
 
 # Distribution / packaging
 .Python
