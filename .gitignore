@@ -6,7 +6,10 @@ __pycache__/
 # our information
 data/images
 data/resized
+data/limited_images
 data/images.csv
+
+.DS_Store
 
 # Distribution / packaging
 .Python
