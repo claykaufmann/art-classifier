@@ -30,5 +30,7 @@ cd ${SLURM_SUBMIT_DIR}
 echo "Running host:    ${SLURMD_NODENAME}"
 echo "Assigned nodes:  ${SLURM_JOB_NODELIST}"
 echo "Job ID:          ${SLURM_JOBID}"
+<<<<<<< HEAD:vacc_run.sh
 conda activate cs254
 time python clay_vacc.py
+
