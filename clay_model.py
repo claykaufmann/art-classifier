@@ -7,13 +7,13 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img,img_to_ar
 from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input
 import glob
 
-def load_data(artists_csv_loc='../cs254-final-project/data/artists.csv', images_dir='../cs254-final-project/data/images/images'):
+def load_data(artists_csv_loc='data/artists.csv', images_dir='data/images/images'):
     artists = pd.read_csv(artists_csv_loc)
     print(artists.shape)
     # print(artists)
 
     # Creating a dataframe with the top 10 artists by number of paintings
-    artists_top = artists.head(10)
+    artists_top = artists.sort_values(by=['paintings'], ascending=False)
     print(artists_top)
 
     # Images
@@ -24,7 +24,7 @@ def load_data(artists_csv_loc='../cs254-final-project/data/artists.csv', images_
 
     images_df = pd.DataFrame()
     for name in artists_top_name:
-        images_df = pd.concat([images_df, pd.DataFrame(data={'Path': glob.glob('../cs254-final-project/data/images/images/' + name + '/*'), 'Name': name})], ignore_index=True)
+        images_df = pd.concat([images_df, pd.DataFrame(data={'Path': glob.glob('data/images/images/' + name + '/*'), 'Name': name})], ignore_index=True)
 
     print(images_df)
 
@@ -58,7 +58,6 @@ def load_data(artists_csv_loc='../cs254-final-project/data/artists.csv', images_
                                         fill_mode="nearest",
                                         validation_split=0.15,
                                         preprocessing_function=preprocess_input
-
                                         )
 
     test_generator = ImageDataGenerator(rescale=1.0 / 255, preprocessing_function=preprocess_input)
