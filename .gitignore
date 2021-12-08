@@ -4,20 +4,7 @@ __pycache__/
 *$py.class
 
 # our information
-data/images/images/*
-
-# include top 10 artists to get data into supercomputer...
-!data/images/images/Amedeo_Modigliani
-!data/images/images/Vasiliy_Kandinskiy
-!data/images/images/Diego_Rivera
-!data/images/images/Claude_Monet
-!data/images/images/Rene_Magritte
-!data/images/images/Salvador_Dali
-!data/images/images/Edouard_Manet
-!data/images/images/Andrei_Rublev
-!data/images/images/Vincent_van_Gogh
-!data/images/images/Gustav_Klimt
-
+data/images
 data/resized
 data/limited_images
 data/images.csv
