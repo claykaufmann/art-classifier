@@ -95,6 +95,8 @@ def load_data(artists_csv_loc='data/artists.csv', images_dir='data/images/images
         target_size=(img_width, img_height)
     )
 
+    
+
 
 def create_model():
     pass
