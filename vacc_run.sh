@@ -1,4 +1,4 @@
-# Specify partition
+#!/bin/bash
 #SBATCH --partition=dggpu
 
 # Request Nodes
@@ -14,7 +14,7 @@
 #SBATCH --mem=14g
 
 # Run for 20 minutes
-#SBATCH --time=5:00
+#SBATCH --time=20:00
 
 # Name of job
 #SBATCH --job-name=TestClay254Final
@@ -30,4 +30,5 @@ cd ${SLURM_SUBMIT_DIR}
 echo "Running host:    ${SLURMD_NODENAME}"
 echo "Assigned nodes:  ${SLURM_JOB_NODELIST}"
 echo "Job ID:          ${SLURM_JOBID}"
-source env/bin/activate
+conda activate cs254
+time python clay_vacc.py

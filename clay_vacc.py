@@ -158,3 +158,5 @@ final_model.fit_generator(
     verbose=1,
     epochs=N_EPOCHS
 )
+
+print('finished model training')
