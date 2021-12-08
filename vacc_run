@@ -31,3 +31,4 @@ echo "Running host:    ${SLURMD_NODENAME}"
 echo "Assigned nodes:  ${SLURM_JOB_NODELIST}"
 echo "Job ID:          ${SLURM_JOBID}"
 source env/bin/activate
+python clay_vacc.py
