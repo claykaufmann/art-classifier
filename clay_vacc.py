@@ -1,5 +1,5 @@
 # imports
-from keras.preprocessing.image import ImageDataGenerator, array_to_img,img_to_array,load_img
+from tensorflow.keras.preprocessing.image import ImageDataGenerator, array_to_img,img_to_array,load_img
 import tensorflow.keras as K
 from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input
 from tensorflow.keras import Input
@@ -23,9 +23,10 @@ artist_csv_loc = os.path.join(main_direc, 'data/artists.csv')
 Set hyperparams for the number of classes and image generators
 """
 
+BATCH_SIZE = 64 
+
 IMG_WIDTH = 299
 IMG_HEIGHT = 299
-BATCH_SIZE = 64
 NUM_ARTISTS = 10 # this is 11 to get to 10 classes, can be changed...
 
 # Collecting Needed Images
