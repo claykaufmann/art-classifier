@@ -1,4 +1,5 @@
 # imports
+from tensorflow.keras import callbacks
 from tensorflow.keras.preprocessing.image import ImageDataGenerator, array_to_img,img_to_array,load_img
 import tensorflow.keras as K
 from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input
@@ -11,6 +12,8 @@ import numpy as np
 import pandas as pd
 import os
 import glob
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
+from sklearn.metrics import accuracy_score
 
 # get directories
 main_direc = os.getcwd()
@@ -150,6 +153,11 @@ final_model.compile(
   metrics=['accuracy']
 )
 
+# create a checkpoint for the model
+checkpt = ModelCheckpoint(filepath='clay_trained_model.hdf5', save_best_only=True, verbose=1)
+
+early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True, mode='min')
+
 # Fit the model
 final_model.fit_generator(
     generator = train_gen,
@@ -157,7 +165,20 @@ final_model.fit_generator(
     validation_data = valid_gen,
     validation_steps = steps_valid,
     verbose=1,
-    epochs=N_EPOCHS
+    epochs=N_EPOCHS,
+    callbacks=[checkpt, early_stop]
 )
 
-print('finished model training')
+# Gen predictions for testing
+
+final_model.load_weights('clay_trained_model.hdf5')
+
+true_classes = test_gen.classes
+class_indices = train_gen.class_indices
+class_indices = dict((v, k) for k, v in class_indices.items())
+
+model_preds = final_model.predict(test_gen)
+model_pred_classes = np.argmax(model_preds, axis=1)
+
+model_acc = accuracy_score(true_classes, model_pred_classes)
+print("Final Model Accuracy without Fine-Tuning: {:.2f}%".format(model_acc * 100))
