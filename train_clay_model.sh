@@ -8,16 +8,16 @@
 #SBATCH --ntasks=2
 
 # Req GPUs
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:3
 
 # Req Memory
-#SBATCH --mem=50G
+#SBATCH --mem=40G
 
-# Run for 20 minutes
+# Run for x minutes
 #SBATCH --time=120
 
 # Name of job
-#SBATCH --job-name=TestClay254Final
+#SBATCH --job-name=Train_Clay_Model_CS254
 
 # Name output file
 #SBATCH --output=%x_j%j.out
