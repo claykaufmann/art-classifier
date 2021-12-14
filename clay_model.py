@@ -61,9 +61,9 @@ train_df = images_df.sample(frac=0.8, random_state=200)
 test_df = images_df.drop(train_df.index)
 
 if K.backend.image_data_format() == 'channels_first':
-    input_shape = (3, IMG_WIDTH, IMG_HEIGHT)
+    input_shape = (3, IMG_HEIGHT, IMG_WIDTH)
 else:
-    input_shape = (IMG_WIDTH, IMG_HEIGHT, 3)
+    input_shape = (IMG_HEIGHT, IMG_WIDTH, 3)
 
 """
 Build generators
@@ -91,7 +91,7 @@ train_gen = train_generator.flow_from_dataframe(
     class_mode='categorical',
     subset="training",
     batch_size=BATCH_SIZE,
-    target_size=(IMG_WIDTH, IMG_HEIGHT),
+    target_size=(IMG_HEIGHT, IMG_WIDTH),
     seed=42
 )
 
@@ -103,7 +103,7 @@ valid_gen = train_generator.flow_from_dataframe(
     y_col='Name',
     class_mode='categorical',
     batch_size=BATCH_SIZE,
-    target_size=(IMG_WIDTH, IMG_HEIGHT),
+    target_size=(IMG_HEIGHT, IMG_WIDTH),
     seed=42
 )
 
@@ -113,7 +113,7 @@ test_gen = test_generator.flow_from_dataframe(
     batch_size=1,
     shuffle=False,
     class_mode=None,
-    target_size=(IMG_WIDTH, IMG_HEIGHT)
+    target_size=(IMG_HEIGHT, IMG_WIDTH)
 )
 
 # Set the amount of steps for training, validation, and testing data
