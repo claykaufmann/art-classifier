@@ -1,6 +1,11 @@
+"""
+This file is purely for training on the VACC. Fine-tuning, metrics, and plots
+were all created in clay_model.ipynb
+"""
+
 # imports
 from tensorflow.keras import callbacks
-from tensorflow.keras.preprocessing.image import ImageDataGenerator, array_to_img,img_to_array,load_img
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow.keras as K
 from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input
 from tensorflow.keras import Input
@@ -13,7 +18,6 @@ import pandas as pd
 import os
 import glob
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
-from sklearn.metrics import accuracy_score
 
 # get directories
 main_direc = os.getcwd()
@@ -30,7 +34,7 @@ BATCH_SIZE = 64
 
 IMG_WIDTH = 299
 IMG_HEIGHT = 299
-NUM_ARTISTS = 10 # this is 11 to get to 10 classes, can be changed...
+NUM_ARTISTS = 10
 
 # Collecting Needed Images
 artists = pd.read_csv(artist_csv_loc)
@@ -38,7 +42,7 @@ artists = pd.read_csv(artist_csv_loc)
 # Creating a dataframe with the top 10 artists by number of paintings
 artists_sort = artists.sort_values(by=['paintings'], ascending=False)
 
-artists_top = artists_sort.head(NUM_ARTISTS)
+artists_top = artists_sort.head(NUM_ARTISTS + 1) # need to add 1 so 10 classes are read in
 print(artists_top)
 
 # Images
@@ -142,7 +146,7 @@ final_model.add(K.layers.Flatten())
 final_model.add(K.layers.BatchNormalization())
 final_model.add(Dense(256, activation='relu'))
 final_model.add(K.layers.Dropout(0.6))
-final_model.add(Dense(NUM_ARTISTS - 1, activation='softmax'))
+final_model.add(Dense(NUM_ARTISTS, activation='softmax'))
 
 final_model.summary()
 
@@ -168,17 +172,3 @@ final_model.fit_generator(
     epochs=N_EPOCHS,
     callbacks=[checkpt, early_stop]
 )
-
-# Gen predictions for testing
-
-final_model.load_weights('clay_trained_model.hdf5')
-
-true_classes = test_gen.classes
-class_indices = train_gen.class_indices
-class_indices = dict((v, k) for k, v in class_indices.items())
-
-model_preds = final_model.predict(test_gen)
-model_pred_classes = np.argmax(model_preds, axis=1)
-
-model_acc = accuracy_score(true_classes, model_pred_classes)
-print("Final Model Accuracy without Fine-Tuning: {:.2f}%".format(model_acc * 100))

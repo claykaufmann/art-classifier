@@ -33,5 +33,5 @@ echo "Running host:    ${SLURMD_NODENAME}"
 echo "Assigned nodes:  ${SLURM_JOB_NODELIST}"
 echo "Job ID:          ${SLURM_JOBID}"
 conda activate cs254
-time python clay_vacc.py
+time python clay_model.py
 
