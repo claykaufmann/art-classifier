@@ -18,6 +18,7 @@ import pandas as pd
 import os
 import glob
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
+from matplotlib import pyplot as plt
 
 # get directories
 main_direc = os.getcwd()
@@ -163,7 +164,7 @@ checkpt = ModelCheckpoint(filepath='clay_trained_model.hdf5', save_best_only=Tru
 early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True, mode='min')
 
 # Fit the model
-final_model.fit_generator(
+history = final_model.fit_generator(
     generator = train_gen,
     steps_per_epoch=steps_train,
     validation_data = valid_gen,
@@ -172,3 +173,24 @@ final_model.fit_generator(
     epochs=N_EPOCHS,
     callbacks=[checkpt, early_stop]
 )
+
+"""
+    The next section creates plots for data during training
+"""
+# Create accuracy plot
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('Model Accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper left')
+plt.savefig('clay_model_accuracy.png')
+
+# create loss plot
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper right')
+plt.savefig('clay_model_accuracy.png')
