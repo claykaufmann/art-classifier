@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# vacc files
+core*
+Test*
+
 # our information
 data/images
 data/resized
