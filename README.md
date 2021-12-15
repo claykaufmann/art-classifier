@@ -64,6 +64,6 @@ After InceptionV3, a flattening layer is added, followed by a BatchNormalization
 layer, a fully connected layer wth 256 neurons, a dropout layer, and finally an
 output layer of 10 neurons with a softmax activation function.
 
-### Colin's Model
+## Colin's Model
 
-### John's Model
+## John's Model
