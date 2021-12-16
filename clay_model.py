@@ -186,6 +186,11 @@ plt.xlabel('epoch')
 plt.legend(['train', 'val'], loc='upper left')
 plt.savefig('clay_model_accuracy.jpg')
 
+# clear plot
+plt.clf()
+plt.cla()
+plt.close()
+
 # create loss plot
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
