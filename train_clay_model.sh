@@ -8,10 +8,10 @@
 #SBATCH --ntasks=2
 
 # Req GPUs
-#SBATCH --gres=gpu:3
+#SBATCH --gres=gpu:4
 
 # Req Memory
-#SBATCH --mem=40G
+#SBATCH --mem=50G
 
 # Run for x minutes
 #SBATCH --time=120
