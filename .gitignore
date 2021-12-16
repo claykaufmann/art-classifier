@@ -71,3 +71,5 @@ venv.bak/
 
 # mkdocs documentation
 /site
+
+baseline_model.hdf5
