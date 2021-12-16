@@ -33,7 +33,6 @@ The artists:
 - Rembrandt
 - Alfred Sisley
 - Titian
-- Marc Chagall
 
 ## Main File
 
