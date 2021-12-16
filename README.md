@@ -55,7 +55,8 @@ same data loading procedures as the main file, but with his model. The file
 the classification report and confusion matrix. This version was used in the
 [Vermont Advanced Computing Core](https://www.uvm.edu/vacc) to train the model.
 Finally, the file `clay_trained_model.hdf5` contains the actual trained model,
-used in the jupyter file to run a classification report and create a confusion matrix.
+used in the jupyter file to run a classification report and create a confusion
+matrix.
 
 ### Model Description
 
@@ -63,6 +64,23 @@ This model takes advantage of InceptionV3 using transfer learning with Keras.
 After InceptionV3, a flattening layer is added, followed by a BatchNormalization
 layer, a fully connected layer wth 256 neurons, a dropout layer, and finally an
 output layer of 10 neurons with a softmax activation function.
+
+### Results
+
+Overall, the model finished with an f1-score of 0.77, making it fairly
+accurate, especially considering there were 10 classes. That being said, it is
+not quite where I would want it to be. If more time were allotted, I would focus
+on adding a few more layers to the model after the Inception network to try and
+add more capacity for learning.
+
+First up is the classification report, using sklearn metrics:
+![Classification Report](./clay_model_metrics/classification_report.png)
+
+Here is the confusion matrix for the model.
+![Confusion Matrix](./clay_model_metrics/confusion_matrix.png)
+Finally we have two plots, accuracy and loss over epochs.
+![Accuracy over Epochs Plot](./clay_model_metrics/accuracy_over_epochs.jpg)
+![Loss over Epochs Plot](./clay_model_metrics/loss_over_epochs.jpg)
 
 ## Colin's Model
 
