@@ -178,13 +178,13 @@ history = final_model.fit_generator(
     The next section creates plots for data during training
 """
 # Create accuracy plot
-plt.plot(history.history['acc'])
-plt.plot(history.history['val_acc'])
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
 plt.title('Model Accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'val'], loc='upper left')
-plt.savefig('clay_model_accuracy.png')
+plt.savefig('clay_model_accuracy.jpg')
 
 # create loss plot
 plt.plot(history.history['loss'])
@@ -193,4 +193,4 @@ plt.title('Model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'val'], loc='upper right')
-plt.savefig('clay_model_loss.png')
+plt.savefig('clay_model_loss.jpg')
