@@ -1,55 +1,57 @@
 
 
+
+
 # Import libraries
 from sklearn import metrics
 from sklearn.metrics import confusion_matrix
-import pandas as pd
+from tensorflow.keras import callbacks
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import tensorflow.keras as K
+from tensorflow.keras import Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Dropout
+import tensorflow as tf
 import numpy as np
+import pandas as pd
 import os
 import glob
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-#from PIL import Image
-from tensorflow import keras
-from tensorflow.keras import layers
-from tensorflow.keras.models import Sequential
-from keras import regularizers, optimizers
-from keras.layers import Activation, Dropout, Flatten, Dense, Conv2D, MaxPooling2D
-from keras.preprocessing.image import ImageDataGenerator, array_to_img,img_to_array,load_img
-from keras import backend as K
-from sklearn.preprocessing import OneHotEncoder
-from keras.layers import AveragePooling2D, MaxPooling2D, Dropout, GlobalMaxPooling2D, GlobalAveragePooling2D, Concatenate, BatchNormalization
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
+from tensorflow.keras.models import Model
 
 
-artists = pd.read_csv('../cs254-final-project/data/artists.csv')
-print(artists.shape)
-# print(artists)
+NUM_ARTISTS = 10
+
+# get directories
+main_direc = os.getcwd()
+images_dir = os.path.join(main_direc, 'data/images/images')
+
+# csv location
+artist_csv_loc = os.path.join(main_direc, 'data/artists.csv')
+
+
+# Collecting Needed Images
+artists = pd.read_csv(artist_csv_loc)
 
 # Creating a dataframe with the top 10 artists by number of paintings
-artists_top = artists.head(10)
-artists_top
+artists_sort = artists.sort_values(by=['paintings'], ascending=False)
 
-# Images
-images_dir = '../cs254-final-project/data/images/images'
-artists_dir = os.listdir(images_dir) # Files are named after each artists
+artists_top = artists_sort.head(NUM_ARTISTS + 1) # need to add 1 so 10 classes are read in
+print(artists_top)
 
 # Images DataFrame
 artists_top_name = artists_top['name'].str.replace(' ', '_').values
 
 images_df = pd.DataFrame()
 for name in artists_top_name:
-    # print(glob.glob('../cs254-final-project/data/images/images/' + name + '/*'))
+    images_df = pd.concat([images_df, pd.DataFrame(data={'Path': glob.glob('data/images/images/' + name + '/*'), 'Name': name})], ignore_index=True)
 
-    # Method 1:
-    #
-    # images_df = images_df.append(pd.DataFrame(data={'Path': glob.glob('../cs254-final-project/data/images/images/' + name + '/*'), 'Name': name}), ignore_index=True)
-
-    # Method 2:
-    #
-    images_df = pd.concat([images_df, pd.DataFrame(data={'Path': glob.glob('../cs254-final-project/data/images/images/' + name + '/*'), 'Name': name})], ignore_index=True)
-
-images_df
+print(images_df)
 
 # Create Generator
 
@@ -62,12 +64,10 @@ img_width, img_height = 277, 277
 train_df = images_df.sample(frac=0.8, random_state=200)
 test_df = images_df.drop(train_df.index)
 
-if K.image_data_format() == 'channels_first':
+if K.backend.image_data_format() == 'channels_first':
     input_shape = (3, img_width, img_height)
 else:
     input_shape = (img_width, img_height, 3)
-
-# instantiate neural network
 
 # Train
 
@@ -133,22 +133,18 @@ def create_model(input_shape, n_classes, optimizer='rmsprop', fine_tune=0):
 
     top_model = conv_base.output
     top_model = Flatten(name="flatten")(top_model)
-    #top_model = Dense(500, activation='relu')(top_model)
-    #top_model = Dense(100, activation='relu')(top_model)
-    #top_model = Dropout(0.2)(top_model)
+    top_model = Dense(500, activation='relu')(top_model)
+    top_model = Dense(100, activation='relu')(top_model)
+    top_model = Dropout(0.2)(top_model)
     output_layer = Dense(n_classes, activation='softmax')(top_model)
 
     model = Model(inputs=conv_base.input, outputs=output_layer)
 
     model.compile(optimizer=optimizer,
-                  loss='categorical_crossentropy',
+                  loss=tf.losses.CategoricalCrossentropy(from_logits=False),
                   metrics=['accuracy'])
 
     return model
-
-from keras.callbacks import ModelCheckpoint, EarlyStopping
-from keras.models import Model
-#from livelossplot.inputs.keras import PlotLossesCallback
 
 #step sizes:
 steps_train = train_gen.n//train_gen.batch_size
@@ -156,9 +152,8 @@ steps_valid = valid_gen.n//valid_gen.batch_size
 steps_test = test_gen.n//test_gen.batch_size
 
 
-optimizer = keras.optimizers.Adam(learning_rate=0.001)
-n_classes = 9
-
+optimizer = tf.optimizers.Adam(learning_rate=0.001)
+n_classes = 10
 n_epochs = 50
 
 vgg = create_model(input_shape,n_classes, optimizer, fine_tune=0)
@@ -204,3 +199,4 @@ from sklearn.metrics import accuracy_score
 
 vgg_acc = accuracy_score(true_classes, vgg_pred_classes)
 print("VGG16 Model Accuracy without Fine-Tuning: {:.2f}%".format(vgg_acc * 100))
+
