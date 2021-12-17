@@ -43,7 +43,7 @@ artists = pd.read_csv(artist_csv_loc)
 # Creating a dataframe with the top 10 artists by number of paintings
 artists_sort = artists.sort_values(by=['paintings'], ascending=False)
 
-artists_top = artists_sort.head(NUM_ARTISTS + 1) # need to add 1 so 10 classes are read in
+artists_top = artists_sort.head(NUM_ARTISTS) # need to add 1 so 10 classes are read in
 print(artists_top)
 
 # Images
