@@ -21,6 +21,7 @@ from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from tensorflow.keras.models import Model
+from matplotlib import pyplot as plt
 
 
 NUM_ARTISTS = 10
@@ -173,7 +174,7 @@ early_stop = EarlyStopping(monitor='val_loss',
 
 vgg.summary()
 
-model_history = vgg.fit_generator(
+history = vgg.fit_generator(
         generator = train_gen,
         steps_per_epoch = steps_train,
         validation_data = valid_gen,
