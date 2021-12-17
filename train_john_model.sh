@@ -14,7 +14,7 @@
 #SBATCH --mem=70G
 
 # Run for x minutes
-#SBATCH --time=120
+#SBATCH --time=200
 
 # Name of job
 #SBATCH --job-name=Train_Johnny_Model
