@@ -183,17 +183,29 @@ model_history = vgg.fit_generator(
         epochs = n_epochs
 )
 
-# Generate predictions
-vgg.load_weights('v1_best_weights.hdf5') # initialize the best trained weights
+"""
+    The next section creates plots for data during training
+"""
+# Create accuracy plot
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Model Accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper left')
+plt.savefig('john_model_accuracy.jpg')
 
-true_classes = test_gen.classes
-class_indices = train_gen.class_indices
-class_indices = dict((v,k) for k,v in class_indices.items())
+# clear plot
+plt.clf()
+plt.cla()
+plt.close()
 
-vgg_preds = vgg.predict(test_gen)
-vgg_pred_classes = np.argmax(vgg_preds, axis=1)
+# create loss plot
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper right')
+plt.savefig('john_model_loss.jpg')
 
-from sklearn.metrics import accuracy_score
-
-vgg_acc = accuracy_score(true_classes, vgg_pred_classes)
-print("VGG16 Model Accuracy without Fine-Tuning: {:.2f}%".format(vgg_acc * 100))

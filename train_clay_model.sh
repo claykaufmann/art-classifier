@@ -14,7 +14,7 @@
 #SBATCH --mem=50G
 
 # Run for x minutes
-#SBATCH --time=120
+#SBATCH --time=250
 
 # Name of job
 #SBATCH --job-name=Train_Clay_Model_CS254
