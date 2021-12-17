@@ -53,9 +53,6 @@ same data loading procedures as the main file, but with his model. The file
 `clay_model.py` is a normal python version of the model, that does not include
 the classification report and confusion matrix. This version was used in the
 [Vermont Advanced Computing Core](https://www.uvm.edu/vacc) to train the model.
-Finally, the file `clay_trained_model.hdf5` contains the actual trained model,
-used in the jupyter file to run a classification report and create a confusion
-matrix.
 
 ### Model Description
 
