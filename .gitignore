@@ -3,6 +3,18 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# vacc files
+core*
+Test*
+
+# our information
+data/images
+data/resized
+data/limited_images
+data/images.csv
+
+.DS_Store
+
 # Distribution / packaging
 .Python
 build/
@@ -59,3 +71,5 @@ venv.bak/
 
 # mkdocs documentation
 /site
+
+baseline_model.hdf5
