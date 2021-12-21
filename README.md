@@ -63,7 +63,7 @@ output layer of 10 neurons with a softmax activation function.
 
 ## Colin's Model
 
-## Code Description
+### Code Description
 
 To see Colin's model, go to the file `colin_model.ipynb`. This file contains a similar data loading procedure as the main file, but with his model.
 
