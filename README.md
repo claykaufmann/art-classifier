@@ -63,6 +63,12 @@ output layer of 10 neurons with a softmax activation function.
 
 ## Colin's Model
 
+## Code Description
+
+To see Colin's model, go to the file `colin_model.ipynb`. This file contains a similar data loading procedure as the main file, but with his model.
+
+### Model Description
+
 This model takes advantage of ResNet50 using transfer learning with Keras.
 After ResNet50, a flattening layer is added, followed by a BatchNormalization layer, a fully conneced layer of 512 neurons with ReLU activation function, then a fully connected layer of 16 neurons with ReLU activation function, and finally an output layer of 10 neurons with a softmax activation function.
 
